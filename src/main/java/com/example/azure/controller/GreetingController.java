@@ -24,7 +24,7 @@ public class GreetingController implements Greeting
     public Message message()
     {
         logger.info("Inside the method message of class Greeting Controller");
-        message.setMessage("Hurray ! The Spring boot web application is deployed");
+        message.setMessage("Hurray ! The Spring boot web application is deployed and it worked");
         return message;
     }
 }
