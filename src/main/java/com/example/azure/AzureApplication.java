@@ -3,6 +3,7 @@ package com.example.azure;
 import com.example.azure.model.Message;
 import com.example.azure.pojo.ApiKeys;
 import com.example.azure.util.AppConstant;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,9 +25,13 @@ import java.util.stream.Stream;
 @ComponentScan(basePackages="com.example.azure")
 public class AzureApplication
 {
+    @Value("${gateway.code}")
+    private String code;
+
 	public static void main(String[] args)
 	{
-		SpringApplication.run(AzureApplication.class, args);
+
+	    SpringApplication.run(AzureApplication.class, args);
 	}
 
 	@Bean
@@ -49,12 +54,11 @@ public class AzureApplication
     {
         return builder.routes()
                 .route(AppConstant.STUDENT_ROUTE_KEY, r -> r.path("/api/student-service/web/**")
-                                .filters(f -> f.stripPrefix(2))
-                                .uri("http://localhost:8085/web/greetings"))
-                                .build();
-
-
-
+                                .filters(f -> f
+                                                .stripPrefix(2)
+                                                .addResponseHeader("Cloud-Gateway", code ))
+                                                .uri("http://localhost:8085/web/greetings"))
+                                                .build();
     }
 
 }
