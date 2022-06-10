@@ -57,7 +57,7 @@ public class AzureApplication
                                 .filters(f -> f
                                                 .stripPrefix(2)
                                                 .addResponseHeader("Cloud-Gateway", code ))
-                                                .uri("http://localhost:8085/web/greetings"))
+                                                .uri("https://azure-study-demo.azurewebsites.net/web/greetings"))
                                                 .build();
     }
 
